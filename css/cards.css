@@ -1,0 +1,122 @@
+/* =========================================================================
+   cards.css — the card frame. Type sets the frame colour, rarity sets the
+   gem and name banner trim. Used in hand, rewards, shop and deck views.
+   ========================================================================= */
+.card {
+  --cw: 150px;
+  --ch: 212px;
+  --type: var(--skill);
+  --rar: var(--common);
+  position: relative;
+  width: var(--cw);
+  height: var(--ch);
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 8px 8px 7px;
+  gap: 4px;
+  text-align: center;
+  color: var(--ink);
+  border-radius: 13px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.08), transparent 40%),
+    color-mix(in srgb, var(--type) 38%, #16120c);
+  border: 2px solid #0b0905;
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--type) 70%, #fff 10%), 0 6px 0 rgba(0, 0, 0, 0.45);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.2s, filter 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.card--attack { --type: var(--attack); }
+.card--skill { --type: var(--skill); }
+.card--power { --type: var(--power); }
+.card--status { --type: var(--status); }
+.card--curse { --type: var(--curse); }
+.rarity-uncommon { --rar: var(--uncommon); }
+.rarity-rare { --rar: var(--rare); }
+.rarity-starter, .rarity-special { --rar: var(--common); }
+
+.card-cost {
+  position: absolute; top: -9px; left: -9px; z-index: 2;
+  width: 32px; height: 32px; display: grid; place-items: center;
+  border-radius: 50%; font-family: var(--font-display); font-size: 1rem; color: #2a1200;
+  background: radial-gradient(circle at 35% 30%, #fff3c4, #ff9a2e 55%, #b4430d);
+  border: 2px solid #0b0905; box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+.card-cost.cheaper { background: radial-gradient(circle at 35% 30%, #e9ffe8, #6fdc8c 55%, #1f7a44); }
+.card-name {
+  display: block; padding: 3px 4px 3px 14px; border-radius: 6px;
+  font-family: var(--font-display); font-size: 0.7rem; line-height: 1.15; letter-spacing: 0.01em;
+  background: #0f0c08; border-bottom: 2px solid var(--rar);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.card-name i { font-style: normal; color: var(--heal); margin-left: 2px; }
+.card-art {
+  position: relative; display: grid; place-items: center; height: 62px; flex: none;
+  border-radius: 6px; overflow: hidden; border: 2px solid #0b0905;
+  background:
+    radial-gradient(circle at 50% 120%, color-mix(in srgb, var(--type) 70%, #fff 20%), transparent 70%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0 6px, transparent 6px 12px),
+    #1b160f;
+}
+.card-art .card-art-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.card-art span { font-size: 2.1rem; line-height: 1; filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.45)); }
+.card-type {
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  font-size: 0.6rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--type) 55%, #fff);
+}
+.gem { width: 7px; height: 7px; border-radius: 2px; transform: rotate(45deg); background: var(--rar); box-shadow: 0 0 6px var(--rar); }
+.card-text {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  font-size: 0.76rem; font-weight: 600; line-height: 1.28;
+  background: rgba(0, 0, 0, 0.32); border-radius: 6px; padding: 5px 4px;
+  overflow: hidden;
+}
+.card-text { display: block; align-content: center; }
+.card-text b { font-size: 0.9rem; color: #fff; }
+.card-text b.up { color: var(--heal); }
+.card-text b.down { color: #ff8c7a; }
+.card-text b.upg { color: var(--heal); }
+.card-text .kw { color: var(--danfo); font-weight: 800; }
+.card-flavor { font-size: 0.62rem; font-style: italic; color: var(--muted); line-height: 1.2; }
+.card.is-up { box-shadow: inset 0 0 0 2px var(--heal), 0 6px 0 rgba(0, 0, 0, 0.45); }
+
+.price-tag {
+  position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--danfo); color: var(--danfo-ink); font-weight: 800; font-size: 0.85rem;
+  padding: 2px 10px; border-radius: 999px; border: 2px solid #0b0905; white-space: nowrap;
+}
+.price-tag.sale { background: var(--heal); }
+.price-tag.sale::before { content: 'SALE '; font-size: 0.65rem; }
+
+/* Card grids and rows outside combat */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 16px 12px; justify-items: center; padding-top: 8px; }
+.card-grid .card { --cw: 124px; --ch: 176px; }
+.card-grid .card .card-art { height: 46px; }
+.card-grid .card .card-art span { font-size: 1.6rem; }
+.card-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; padding-top: 10px; }
+button.card:not(:disabled):hover { transform: translateY(-6px); }
+button.card.too-dear { filter: grayscale(0.6); opacity: 0.6; }
+
+@media (max-width: 520px) {
+  .card-row .card { --cw: 132px; --ch: 190px; }
+  .card-grid { grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); }
+  .card-grid .card { --cw: 108px; --ch: 158px; }
+  .card-grid .card .card-flavor { display: none; }
+}
+
+/* Long rules text shrinks a step so it never clips */
+.card-text.txt-long { font-size: 0.7rem; }
+.card-text.txt-xlong { font-size: 0.64rem; line-height: 1.22; }
+.card-text.txt-long b, .card-text.txt-xlong b { font-size: 0.82rem; }
+.card-grid .card .card-text { font-size: 0.68rem; padding: 4px 3px; }
+.card-grid .card .card-text.txt-long { font-size: 0.62rem; }
+.card-grid .card .card-text.txt-xlong { font-size: 0.57rem; line-height: 1.18; }
+.card-grid .card .card-text b { font-size: 0.74rem; }
+@media (max-width: 760px) {
+  .hand .card .card-text.txt-long { font-size: 0.58rem; }
+  .hand .card .card-text.txt-xlong { font-size: 0.53rem; line-height: 1.15; }
+  .hand .card .card-text.txt-long b, .hand .card .card-text.txt-xlong b { font-size: 0.66rem; }
+}

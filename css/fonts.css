@@ -1,0 +1,4 @@
+/* Self-hosted fonts (SIL Open Font License) for builds that can't rely on
+   Google Fonts, such as the Lagos Life build. */
+@font-face { font-family: 'Bungee'; src: url('../fonts/bungee.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Bricolage Grotesque'; src: url('../fonts/bricolage.woff2') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
